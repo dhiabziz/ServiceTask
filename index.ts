@@ -1,15 +1,6 @@
 require("dotenv").config();
 const { Camunda8 } = require("@camunda8/sdk");
 
-// Define the Job type manually
-// interface Job<TVariables = any, TCustomHeaders = any, TOutput = any> {
-//   variables: TVariables;
-//   customHeaders: TCustomHeaders;
-//   complete: (output: TOutput) => Promise<void>;
-//   fail: (errorMessage: string) => Promise<void>;
-//   type: string;
-// }
-
 const ZEEBE_ADDRESS = process.env.ZEEBE_ADDRESS;
 const ZEEBE_CLIENT_ID = process.env.ZEEBE_CLIENT_ID;
 const ZEEBE_CLIENT_SECRET = process.env.ZEEBE_CLIENT_SECRET;
@@ -81,7 +72,7 @@ zeebe.createWorker({
   taskType: "cek-sisa-kuota", 
   
   taskHandler: async (job) => {
-    console.log(`Menerima job '${job.type}'`);
+    console.log(`\nMenerima job '${job.type}'`);
 
     const { karyawanId } = job.variables;
     
@@ -118,7 +109,7 @@ zeebe.createWorker({
   taskType: "update-database-hr", 
 
   taskHandler: async (job) => {
-    console.log(`Menerima job '${job.type}' untuk mengurangi cuti.`);
+    console.log(`\nMenerima job '${job.type}' untuk mengurangi cuti.`);
 
     const { karyawanId, jumlahHari } = job.variables;
 
@@ -164,7 +155,7 @@ zeebe.createWorker({
   taskType: "kirim-notifikasi",
 
   taskHandler: async (job) => {
-    console.log(`Menerima job '${job.type}' untuk mengirim notifikasi.`);
+    console.log(`\nMenerima job '${job.type}' untuk mengirim notifikasi.`);
 
     const { notifikasi } = job.variables;
 
